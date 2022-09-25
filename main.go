@@ -1,14 +1,11 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"time"
 
+	"github.com/kzeratal/cinnox-homework/internal/mongoHandler"
 	"github.com/line/line-bot-sdk-go/v7/linebot"
 	"github.com/spf13/viper"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func main() {
@@ -19,11 +16,19 @@ func main() {
 		panic(err)
 	}
 	URL := fmt.Sprintf("%v", viper.Get("mongo.URL"))
-	ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
-	defer cancel()
-	if _, err := mongo.Connect(ctx, options.Client().ApplyURI(URL)); err != nil {
-		panic(err)
+	mongoHandler.Connect(URL)
+	defer mongoHandler.Disconnect()
+	fmt.Println("Connected to MongoDB")
+
+	message := mongoHandler.Message{
+		UserID: "ID",
+		Text: 	"test",
 	}
+	mongoHandler.InsertOne(message)
+	for _, message := range(mongoHandler.FindMessages()) {
+		fmt.Println(message)
+	}
+
 	channelSecret := fmt.Sprintf("%v", viper.Get("channel.Secret"))
 	channelAccessToken := fmt.Sprintf("%v", viper.Get("channel.accessToken"))
 	if _, err := linebot.New(channelSecret, channelAccessToken); err != nil {

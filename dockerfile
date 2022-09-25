@@ -7,7 +7,7 @@ COPY go.sum ./
 COPY config.yml ./
 RUN go mod download
 
-COPY *.go ./
+COPY . ./
 RUN go build -o /cinnox-homework
 
 EXPOSE 8080
