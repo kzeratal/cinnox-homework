@@ -1,0 +1,5 @@
+line:
+  channelSecret: b464c76fc98fa187341b8ce1f3554696
+  channelAccessToken: KW2rxZXU6IySxeu+kP4JtyV1h8wMdT6SGlPeaxnsLjA9xZ691q6WakIORhi2WOySs2zjxXxSTRqsMsfejfuVcyBo3DWAQ/lcM4+HGUYNacGtY4PtTX+cbWQ1gwEAa/ptcJckop+L+Agr6d1FpaQH5wdB04t89/1O/w1cDnyilFU=
+mongo:
+  URL: mongodb://root:password@localhost:27017
