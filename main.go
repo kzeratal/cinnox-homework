@@ -23,10 +23,6 @@ func main() {
 	defer mongoHandler.Disconnect()
 	fmt.Println("Connected to MongoDB")
 
-	for _, message := range(mongoHandler.FindMessages()) {
-		fmt.Println(message)
-	}
-
 	secret := fmt.Sprintf("%v", viper.Get("line.secret"))
 	accessToken := fmt.Sprintf("%v", viper.Get("line.accessToken"))
 	lineHandler.Init(secret, accessToken)
@@ -34,5 +30,7 @@ func main() {
 	server := gin.Default()
 	server.POST("/receive", ginHandler.Revceive)
 	server.POST("/broadcast", ginHandler.Broadcast)
+	server.GET("/:userID", ginHandler.GetMessagesByUserID)
+	server.GET("/", ginHandler.GetMessages)
 	server.Run()
 }

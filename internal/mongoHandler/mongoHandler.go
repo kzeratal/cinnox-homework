@@ -2,6 +2,7 @@ package mongoHandler
 
 import (
 	"context"
+	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -13,8 +14,8 @@ var client *mongo.Client
 
 type Message struct {
 	ID 			primitive.ObjectID	`bson:"_id,omitempty"`
-	UserID	string							`bson:"name,omitempty"`
-	Text		string							`bson:"email,omitempty"`
+	UserID	string							`bson:"userID"`
+	Text		string							`bson:"text"`
 }
 
 func Connect(URL string) {
@@ -38,6 +39,20 @@ func FindMessages() []Message {
 	}
 	var messages []Message
 	if err := cursor.All(context.TODO(), &messages); err != nil {
+		panic(err)
+	}
+	return messages
+}
+
+func FindMessagesByUserID(userID string) []Message {
+	fmt.Println(userID)
+	filter := bson.D{{ Key: "userID", Value: userID }}
+	cursor, err := client.Database("testing").Collection("messages").Find(context.TODO(), filter)
+	if err != nil {
+		panic(err)
+	}
+	var messages []Message
+	if err = cursor.All(context.TODO(), &messages); err != nil {
 		panic(err)
 	}
 	return messages

@@ -26,3 +26,14 @@ func Broadcast(c *gin.Context) {
 	lineHandler.Broadcast(body["text"])
 	c.JSON(200, "ok")
 }
+
+func GetMessagesByUserID(c *gin.Context) {
+	userID := c.Param("userID")
+	messages := mongoHandler.FindMessagesByUserID(userID)
+	c.JSON(200, messages)
+}
+
+func GetMessages(c *gin.Context) {
+	messages := mongoHandler.FindMessages()
+	c.JSON(200, messages)
+}
