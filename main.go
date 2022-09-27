@@ -33,5 +33,6 @@ func main() {
 
 	server := gin.Default()
 	server.POST("/receive", ginHandler.Revceive)
+	server.POST("/broadcast", ginHandler.Broadcast)
 	server.Run()
 }

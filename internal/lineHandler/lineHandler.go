@@ -35,3 +35,8 @@ func GetMessages(req *http.Request) []interface{} {
 	}
 	return messages
 }
+
+func Broadcast(text string) {
+	message := linebot.NewTextMessage(text)
+	bot.BroadcastMessage(message).Do()
+}
