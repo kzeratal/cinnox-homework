@@ -48,3 +48,9 @@ func InsertOne(message Message) {
 		panic(err)
 	}
 }
+
+func InsertMany(messages []interface{}) {
+	if _, err := client.Database("testing").Collection("messages").InsertMany(context.TODO(), messages); err != nil {
+		panic(err)
+	}
+}
